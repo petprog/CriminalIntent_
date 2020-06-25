@@ -5,7 +5,7 @@ import android.text.format.DateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-public class Crime {
+public class Crime implements Comparable<UUID> {
 
     private UUID mId;
     private String mTitle;
@@ -14,7 +14,6 @@ public class Crime {
     private boolean mRequiresPolice;
 
     public Crime() {
-
         mId = UUID.randomUUID();
         mDate = new Date();
     }
@@ -55,5 +54,10 @@ public class Crime {
 
     public void setRequiresPolice(boolean requiresPolice) {
         mRequiresPolice = requiresPolice;
+    }
+
+    @Override
+    public int compareTo(UUID id) {
+        return this.mId.compareTo(id);
     }
 }

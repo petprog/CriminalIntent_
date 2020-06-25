@@ -1,9 +1,13 @@
 package com.petprog.android.criminalintent;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class CrimeLab {
@@ -11,6 +15,7 @@ public class CrimeLab {
     private static CrimeLab sCrimeLab;
 
     private List<Crime> mCrimes;
+    private Map<UUID, Integer> mappingCrime = new HashMap<>();
 
     public static CrimeLab get(Context context) {
 
@@ -27,6 +32,7 @@ public class CrimeLab {
         // A fully loaded layer with 100 crimes
         for (int i = 0; i < 100; i++) {
             Crime crime = new Crime();
+            mappingCrime.put(crime.getId(), i);
             crime.setTitle("Crime #" + i);
             crime.setSolved(i % 2 == 0);
             crime.setRequiresPolice(i % 2 == 0);
@@ -40,12 +46,8 @@ public class CrimeLab {
 
     public Crime getCrime(UUID id) {
 
-        for (Crime crime : mCrimes) {
-            if (crime.getId().equals(id)) {
-                return crime;
-            }
-        }
-
+        if(mappingCrime.containsKey(id))
+            return mCrimes.get(mappingCrime.get(id));
         return null;
     }
 
